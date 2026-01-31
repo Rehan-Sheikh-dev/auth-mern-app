@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome | Sleek 3D UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      perspective: 1200px;
+      background: linear-gradient(135deg, #000000, #ffffff);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .card {
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease-in-out, box-shadow 0.3s;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:hover {
+      transform: rotateY(8deg) rotateX(5deg);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+
+    .button-glow {
+      background: linear-gradient(to right, #7f5af0, #73a0a9);
+      color: black;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .button-glow:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(15, 214, 255, 0.4);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-[#84ABA1]">
+
+  <form class="card w-[400px] h-[300px] rounded-3xl bg-[#1D362F] p-10 flex flex-col items-center justify-center text-center" action="/user/logout" method="post">
+    <h1 class="text-4xl font-bold text-white mb-4">Welcome,  <%= user.name %>!</h1>
+    <p class="text-gray-300 mb-8">You are now logged in.</p>
+    <input type="submit" class="px-6 py-3 rounded-xl button-glow" value="Logout">
+       
+  </form>
+
+</body>
+<script></script>
+</html>

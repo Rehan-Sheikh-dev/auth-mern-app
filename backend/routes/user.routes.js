@@ -1,10 +1,15 @@
 import express from "express"
-import {signupMiddleWare,loginMiddleWare} from "../middlewares/auth.middleware.js";
-import {createdUser,loggedInUser} from "../controllers/user.controller.js";
+import {signupMiddleWare,loginMiddleWare,logoutMiddleWare} from "../middlewares/auth.middleware.js";
+import {createdUser,loggedInUser,logoutUser} from "../controllers/user.controller.js";
 
 const app = express.Router();
 
 app.post("/signup", signupMiddleWare ,createdUser);
 app.post("/login",loginMiddleWare,loggedInUser)
+app.post("/logout",logoutMiddleWare,logoutUser)
+app.get('/create',function(req,res){
+    res.render('create')
+})
 
-export default app
+
+export default app 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auth | 3D UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .perspective { perspective: 1200px; }
+    .card {
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(.4,.2,.2,1);
+    }
+    .card.flip { transform: rotateY(180deg); }
+    .face { backface-visibility: hidden; }
+    .back { transform: rotateY(180deg); }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-[#05050b] relative">
+
+  <div class="absolute w-[500px] h-[500px] bg-purple-600/30 blur-[140px] rounded-full"></div>
+  <div class="absolute w-[400px] h-[400px] bg-cyan-500/20 blur-[120px] rounded-full"></div>
+
+  <div id="alertBox"
+       class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-6 py-4 rounded-xl
+              bg-white border border-gray-300 shadow-lg text-gray-800 font-medium">
+    <span class="text-red-500 text-xl">⚠</span>
+    <p id="alertText" class="text-sm"></p>
+  </div>
+
+  <div class="perspective z-10">
+    <div id="card" class="card w-[380px] h-[480px] rounded-2xl bg-[#0b0b16] border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.8)]">
+
+      <form id="loginForm" action="/user/login" method="post" class="face absolute inset-0 p-8 flex flex-col justify-center" onsubmit="return login(event)">
+        <h2 class="text-3xl font-bold text-white mb-2">Welcome back</h2>
+        <p class="text-white/50 mb-6">Login to your account</p>
+
+        <input name="email" id="loginEmail" placeholder="Email"
+          class="mb-4 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:outline-none focus:border-purple-500">
+
+        <input name="password" id="loginPassword" placeholder="Password" type="password"
+          class="mb-6 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:outline-none focus:border-purple-500">
+
+        <input type="submit"
+          class="py-3 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-500 font-bold text-black" value="Login">
+
+        <p class="text-sm text-white/50 mt-6">
+          New here?
+          <button type="button" onclick="flip()" class="text-purple-400 hover:underline">
+            Create an account →
+          </button>
+        </p>
+      </form>
+
+      <form id="signupForm" action="/user/signup" method="post" class="face back absolute inset-0 p-8 flex flex-col justify-center">
+        <h2 class="text-3xl font-bold text-white mb-2">Create account</h2>
+        <p class="text-white/50 mb-6">Start your journey</p>
+
+        <input name="name" placeholder="Username"
+               class="mb-3 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+
+        <input name="email" placeholder="Email"
+               class="mb-3 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+ 
+        <input name="password" placeholder="Password" type="password"
+               class="mb-6 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white focus:outline-none focus:border-cyan-500">
+
+        <input type="submit" class="py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 font-bold text-black" value="Sign Up">
+          
+
+        <p class="text-sm text-white/50 mt-6">
+          Already have access?
+          <input type="button" onclick="flip()" class="text-cyan-400 hover:underline" value="Log in →">
+        </p>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById("card");
+    const alertBox = document.getElementById("alertBox");
+    const alertText = document.getElementById("alertText");
+
+    function flip() {
+      card.classList.toggle("flip");
+    }
+
+     const urlParams = new URLSearchParams(window.location.search);
+  const successMsg = urlParams.get("success");
+
+  if (successMsg) {
+    showAlert("User created successfully 🎉");
+    window.history.replaceState({}, document.title, "/");
+  }
+
+    function showAlert(message) {
+      alertText.innerText = message;
+      alertBox.classList.remove("hidden");
+      alertBox.classList.add("flex");
+
+      setTimeout(() => {
+        alertBox.classList.add("hidden");
+        alertBox.classList.remove("flex");
+      }, 3000);
+    }
+
+    function login(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      if (!email || !password) {
+        showAlert("User doesn’t exist");
+        return false; 
+      }
+      e.target.submit();
+    }
+
+    const backendError = "<%= error ? error : '' %>";
+    if (backendError !== "") {
+      showAlert(backendError);
+    }
+  </script>
+
+</body>
+</html>

@@ -2,11 +2,11 @@ import express from 'express';
 import dotenv from "dotenv";
 import DbConnect from './config/mongoose-connect.js';
 import cookieParser from 'cookie-parser';
-import cors from "cors"
 import userRouter from "./routes/user.routes.js"
+import { fileURLToPath } from "url";
+import path from "path";
 
 dotenv.config();
-
   (async()=>{
     try {
         await DbConnect();
@@ -17,16 +17,20 @@ dotenv.config();
     }
   })();
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);  
 const app = express();
 
-app.use(express.json({}));
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(express.static(path.join(__dirname,"public")))
 app.use(cookieParser());
-app.use(cors())
+app.set("view engine","ejs");
 app.use("/user",userRouter)
 
 app.get("/",function(req,res){
-    res.send("hello")
+    res.render("index",{error:""})
 })
 
 app.listen(process.env.PORT,function(){

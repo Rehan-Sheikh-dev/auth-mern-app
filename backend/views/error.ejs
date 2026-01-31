@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            perspective: 1200px;
+            background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Bada Card */
+        .card {
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease-in-out, box-shadow 0.3s;
+            background: #1b1b2f;
+            border-radius: 2rem;
+            padding: 4rem 6rem;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            max-width: 800px;
+        }
+
+        .card:hover {
+            transform: rotateY(6deg) rotateX(3deg);
+            box-shadow: 0 35px 80px rgba(0,0,0,0.8);
+        }
+
+        h1 {
+            font-size: 8rem;
+            color: #f43f5e;
+            text-shadow: 0 0 15px #f43f5e, 0 0 30px #f43f5e;
+        }
+
+        p {
+            color: #cbd5e1;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .button-glow {
+            background: linear-gradient(to right, #f43f5e, #3b82f6);
+            color: white;
+            font-weight: bold;
+            padding: 1rem 3rem;
+            border-radius: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 2rem;
+            display: inline-block;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .button-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255,0,150,0.5), 0 0 50px rgba(59,130,246,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>User Not Found</h1>
+        <p>The email or username you entered does not exist.</p>
+        <a href="/" class="button-glow">Go Back to Login</a>
+    </div>
+</body>
+</html>

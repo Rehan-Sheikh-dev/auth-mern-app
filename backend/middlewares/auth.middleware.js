@@ -3,9 +3,7 @@ import userModel from "../models/user.models.js"
 export const signupMiddleWare = async (req,res,next) => {
      try {
     const { email, name, password } = req.body;
-    if (!email || !name || !password) {
-      return res.status(400).send({ message: "All fields are required!" })
-    }
+    if (!email || !name || !password) return res.status(400).send( "All fields are required!");
     if (typeof email !== "string"|| typeof name !== "string"||  typeof password !== "string") { 
     return res.status(400).send({error:"Invalid data types",message:"email, name and password must be strings"})
     }
@@ -28,4 +26,10 @@ export const loginMiddleWare = async (req,res,next) => {
   } catch (error) {
     res.status(500).send({message:"Server Error"})
   }
+}
+
+export const logoutMiddleWare = async (req,res,next) => {
+  const token = req.cookies.token; 
+  if(!token) return res.redirect("/?message=logout");
+    next()
 }
