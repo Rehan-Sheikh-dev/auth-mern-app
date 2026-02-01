@@ -7,9 +7,7 @@ const app = express.Router();
 app.post("/signup", signupMiddleWare ,createdUser);
 app.post("/login",loginMiddleWare,loggedInUser)
 app.post("/logout",logoutMiddleWare,logoutUser)
-app.get('/create',function(req,res){
-    res.render('create')
-})
+
 
 
 export default app 

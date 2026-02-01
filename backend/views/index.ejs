@@ -13,10 +13,49 @@
     .card.flip { transform: rotateY(180deg); }
     .face { backface-visibility: hidden; }
     .back { transform: rotateY(180deg); }
+
+    @keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.9);
+  }
+}
+
+.toast-show {
+  display: flex;
+  animation: toastIn 0.4s ease forwards;
+}
+
+.toast-hide {
+  animation: toastOut 0.4s ease forwards;
+}
+
   </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center bg-[#05050b] relative">
+  <div id="toast"
+  class="fixed top-6 left-1/2 -translate-x-1/2 z-50
+         hidden items-center gap-3 px-6 py-4 rounded-2xl
+         backdrop-blur-xl bg-white/10 border border-white/20
+         shadow-[0_0_40px_rgba(0,255,180,0.35)]
+         text-white font-semibold tracking-wide">
+
+  <span class="text-2xl">✅</span>
+  <span id="toastText"></span>
+</div>
+
 
   <div class="absolute w-[500px] h-[500px] bg-purple-600/30 blur-[140px] rounded-full"></div>
   <div class="absolute w-[400px] h-[400px] bg-cyan-500/20 blur-[120px] rounded-full"></div>
@@ -94,6 +133,29 @@
     window.history.replaceState({}, document.title, "/");
   }
 
+    const params = new URLSearchParams(window.location.search);
+   const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toastText");
+
+  function showToast(msg) {
+    toastText.innerText = msg;
+    toast.classList.remove("hidden", "toast-hide");
+    toast.classList.add("toast-show");
+
+    setTimeout(() => {
+      toast.classList.remove("toast-show");
+      toast.classList.add("toast-hide");
+
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 400);
+    }, 3000);
+  }
+
+  if (params.get("logout") === "success") {
+    showToast("Logged out successfully 🔒");
+    window.history.replaceState({}, document.title, "/");
+  }
     function showAlert(message) {
       alertText.innerText = message;
       alertBox.classList.remove("hidden");
